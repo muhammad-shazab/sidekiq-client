@@ -1,7 +1,7 @@
 Add Jobs to Sidekiq from Node.js
 ================================
 
-Enqueue jobs to sidekiq from your node apps. Closely mirrors the official 
+Enqueue jobs to sidekiq from your node apps. Closely mirrors the official
 ruby sidekiq interface and supports job scheduling.
 
 
@@ -9,7 +9,7 @@ Installation
 ------------
 
 ```shell
-npm install sidekiq --save
+npm install @actionsprout/node-sidekiq --save
 ```
 
 
@@ -18,7 +18,7 @@ Usage
 
 ```javascript
 // Require the module
-Sidekiq = require("sidekiq");
+import Sidekiq from 'sidekiq';
 
 // Construct a sidekiq object with your redis connection and optional namespace
 sidekiq = new Sidekiq(redisCon, process.env.NODE_ENV);
