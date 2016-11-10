@@ -37,7 +37,7 @@ export default class Sidekiq {
     return this.namespaceKey(`queue:${this.getQueueName(queueName)}`);
   }
 
-  enqueue(workerClass, args, payload) {
+  enqueue(workerClass, args, payload = {}) {
     return this.generateJobId().then((jobId) => {
       payload.class = workerClass;
       payload.args = args;
