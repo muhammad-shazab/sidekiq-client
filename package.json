@@ -1,42 +1,67 @@
 {
-  "name": "@actionsprout/node-sidekiq",
-  "version": "0.1.0",
-  "description": "Enqueue sidekiq jobs from your node apps.",
+  "name": "@alienfast/sidekiq-client",
+  "version": "1.0.0",
+  "description": "Node sidekiq client.",
   "main": "dist/sidekiq.js",
   "scripts": {
-    "prepublish": "npm run build",
-    "build": "./node_modules/.bin/babel src/ -d dist/",
-    "lint": "./node_modules/.bin/eslint src/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:ActionSprout/node-sidekiq.git"
+    "prebuild": "rimraf build",
+    "build": "babel src --ignore *.spec.js --out-dir build",
+    "prerelease": "yarn build",
+    "release": "yarn buildFinalizeRelease && cd build && npm publish",
+    "flow": "flow",
+    "lint": "eslint . --cache && echo \"eslint: no lint errors\"",
+    "lint:fix": "eslint . --cache --fix && echo \"eslint: no lint errors\"",
+    "test": "yarn lint && yarn flow && yarn test:unit",
+    "test:unit": "mocha"
   },
   "keywords": [
     "sidekiq",
+    "client",
     "queue",
     "redis"
   ],
-  "author": {
-    "name": "Kyle Rader",
-    "email": "kyle@actionsprout.com"
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alienfast/i18next-loader"
   },
-  "license": "MIT",
+  "homepage": "https://github.com/alienfast/i18next-loader",
+  "maintainers": [
+    {
+      "name": "Kevin Ross",
+      "email": "kevin.ross@alienfast.com"
+    }
+  ],
   "dependencies": {
-    "bluebird": "^3.4.6",
-    "redis": "^2.6.3"
+    "redis": "^2.8.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-eslint": "^7.1.0",
-    "babel-preset-es2015": "^6.18.0",
-    "chai": "^3.5.0",
-    "eslint": "^3.9.1",
-    "eslint-config-airbnb": "^12.0.0",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.4.1",
+    "@alienfast/build": "^2.0.131",
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "chai": "^4.1.2",
+    "eslint": "^4.8.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-import-resolver-webpack": "0.8.3",
+    "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-flowtype": "^2.39.1",
+    "eslint-plugin-graphql": "^1.4.0-1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-mocha": "^4.11.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "flow-bin": "^0.56.0",
     "mocha": "^3.1.2",
-    "sinon": "^1.17.6"
+    "rimraf": "^2.6.2",
+    "sinon": "^4.0.1"
   }
 }
