@@ -1,6 +1,11 @@
 // @flow
 
+import redis from 'redis'
+import bluebird from 'bluebird'
 import generateJobId from './generateJobId'
+
+// Prepare the redis interface
+bluebird.promisifyAll(redis.RedisClient.prototype)
 
 /**
  *
@@ -40,6 +45,15 @@ type RedisClient = {
 class SidkiqClient {
   redisClient: Object
 
+  /**
+   * Convenience routine to create the promisified redis client
+   * @param options
+   * @see https://github.com/NodeRedis/node_redis#promises
+   */
+  static redisCreateClient (options: Object) {
+    return redis.createClient(options)
+  }
+
   constructor (redisClient: RedisClient) {
     this.redisClient = redisClient
 
@@ -49,7 +63,7 @@ class SidkiqClient {
   }
 
   async enqueue (jobRequest: JobRequest, at?: ?Date = null) {
-    const jobId = await generateJobId() // FIXME get this from redis client? client.randomkeyAsync()
+    const jobId = await generateJobId()
     const now = new Date().getTime() / 1000
 
     const job: Job = {
@@ -67,17 +81,21 @@ class SidkiqClient {
       job.retry = true
     }
 
-    // see https://github.com/mperham/sidekiq/blob/master/lib/sidekiq/client.rb#L191
+    // @see https://github.com/mperham/sidekiq/blob/master/lib/sidekiq/client.rb#L191
     if (at) {
       // Push job scheduled to run at specific time
       job.at = at.getTime() / 1000
-      // conn.zadd('schedule', payloads)
-      return this.redisClient.zaddAsync('schedule', job.at, JSON.stringify(job))
+      //
+      //   ruby: conn.zadd('schedule', payloads)
+      const enqueueResponse = await this.redisClient.zaddAsync('schedule', [job.at, JSON.stringify(job)])
+      return enqueueResponse
     } else {
-      // conn.sadd('queues', q)
+      // ensure the queue exists
+      //  ruby: conn.sadd('queues', q)
       const queueAdd = await this.redisClient.saddAsync('queues', job.queue) // eslint-disable-line no-unused-vars
-      // conn.lpush("queue:#{q}", to_push)
-      const enqueueResponse = await this.redisClient.lpushAsync(`queue:${job.queue}`, JSON.stringify(job))
+      // push the job
+      //  ruby: conn.lpush("queue:#{q}", to_push)
+      const enqueueResponse = await this.redisClient.lpushAsync(`queue:${job.queue}`, [job.enqueued_at, JSON.stringify(job)])
       return enqueueResponse
     }
   }

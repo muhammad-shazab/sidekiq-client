@@ -21,11 +21,11 @@ yarn add @alienfast/sidekiq-client redis
 ## Usage
 
 ```javascript
-import Redis from 'redis'
 import SidekiqClient from '@alienfast/sidekiq-client'
 
-
-const sidekiq = new SidekiqClient(Redis.createClient({ url: 'redis://foo:6379' }));
+// provide your own promisified redis client, or use the helper
+const redisClient = SidekiqClient.redisCreateClient({ url: 'redis://foo:6379' })
+const sidekiq = new SidekiqClient(redisClient);
 
 // Enqueue a job to the 'default' queue with retry
 sidekiq.enqueue({ 
@@ -51,12 +51,12 @@ sidekiq.enqueue({
 # Reporting Bugs or Feature Requests
 
 - Issues: please log issues in the issue tracker and submit a PR with a fix.
-- Feature Requests: if you are willing to PR, please log an issue with the outline of your proposal for discussion, followed by the PR.
+- Feature Requests: please log an issue with the outline of your proposal for discussion, followed by the PR.
 
 # How you can help
 
 - Add mocha test with assertions! 
-- Add any feature you like
+- Add any feature you like (with tests)
 
 # License
 
