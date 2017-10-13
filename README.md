@@ -4,11 +4,11 @@
 
 A [Sidekiq](http://sidekiq.org/) client for node, intended to mimic the default behaviors of the Sidekiq client itself.
 
-# Use case
+## Use case
 
 A [Google Cloud Functions](https://cloud.google.com/functions/) microservice that processes and queues data back for persistence via a ruby Sidekiq job.
 
-# Features
+## Features
 
 - flow type checked standard [Sidekiq job format](https://github.com/mperham/sidekiq/wiki/Job-Format)
 - `enqueue`
@@ -50,16 +50,16 @@ sidekiq.enqueue({
 }, new Date(2017, 10, 1))
 ```
 
-# Reporting Bugs or Feature Requests
+## Reporting Bugs or Feature Requests
 
 - Issues: please log issues in the issue tracker and submit a PR with a fix.
 - Feature Requests: please log an issue with the outline of your proposal for discussion, followed by the PR.
 
-# How you can help
+## How you can help
 
 - Add mocha test with assertions! 
 - Add any feature you like (with tests)
 
-# License
+## License
 
 This is free software released under the MIT License. See LICENSE for details.
