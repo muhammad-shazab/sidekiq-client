@@ -1,4 +1,6 @@
 # @alienfast/sidekiq-client
+[![CircleCI](https://circleci.com/gh/alienfast/sidekiq-client/tree/develop.svg?style=svg&circle-token=d8b714e79a3ed2e51c4ee2b7dd31b7b801e9e708)](https://circleci.com/gh/alienfast/sidekiq-client/tree/develop)
+[![npm version](https://badge.fury.io/js/%40alienfast%2Fsidekiq-client.svg)](https://badge.fury.io/js/%40alienfast%2Fsidekiq-client)
 
 A [Sidekiq](http://sidekiq.org/) client for node, intended to mimic the default behaviors of the Sidekiq client itself.
 
