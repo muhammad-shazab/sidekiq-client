@@ -1,0 +1,25 @@
+[ignore]
+
+# prefix with .* to get nested ignores
+.*/node_modules/fbjs
+.*/node_modules/editions
+.*/node_modules/babel-plugin-flow-react-proptypes
+.*/node_modules/babel-plugin-transform-react-remove-prop-types
+.*/node_modules/config-chain
+.*/node_modules/npm
+.*/node_modules/graphql
+.*/node_modules/graphql-config
+
+[include]
+
+[libs]
+./flow
+
+[options]
+esproposal.class_static_fields=enable
+esproposal.class_instance_fields=enable
+esproposal.export_star_as=enable
+esproposal.decorators=ignore
+
+suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
+unsafe.enable_getters_and_setters=true
