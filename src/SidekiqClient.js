@@ -18,11 +18,13 @@ export type JobRequest = {
   class: string,
   args: Args,
   queue?: string,
+  retry?: boolean,
 }
 
 export type Job = {
   ...$Exact<JobRequest>,
   queue: string,
+  retry: boolean,
   at?: number,
   jid: string, // 12-byte random number as 24 char hex string
   created_at: number,
@@ -59,6 +61,10 @@ class SidkiqClient {
 
     if (!job.queue) {
       job.queue = 'default'
+    }
+
+    if (job.retry === undefined) {
+      job.retry = true
     }
 
     // see https://github.com/mperham/sidekiq/blob/master/lib/sidekiq/client.rb#L191

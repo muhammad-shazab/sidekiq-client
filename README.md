@@ -1,6 +1,6 @@
 # @alienfast/sidekiq-client
 
-A [Sidekiq](http://sidekiq.org/) client for node. 
+A [Sidekiq](http://sidekiq.org/) client for node, intended to mimic the default behaviors of the Sidekiq client itself.
 
 # Use case
 
@@ -27,16 +27,25 @@ import SidekiqClient from '@alienfast/sidekiq-client'
 
 const sidekiq = new SidekiqClient(Redis.createClient({ url: 'redis://foo:6379' }));
 
-// Enqueue a job
-sidekiq.enqueue("WorkerClass", ["argument", "array"], {
+// Enqueue a job to the 'default' queue with retry
+sidekiq.enqueue({ 
+  class: 'MyJob',
+  args: ['foo']
+})
+
+// Enqueue a job to the 'critical' queue without retry
+sidekiq.enqueue({ 
+  class: 'MyJob',
+  args: ['foo'],
   retry: false,
-  queue: "critical"
+  queue: 'critical'  
 })
 
 // Schedule a job
-sidekiq.enqueue("WorkerClass", ["some", "args"], {
-  at: new Date(2017, 10, 1)
-})
+sidekiq.enqueue({ 
+  class: 'MyJob',
+  args: ['foo']
+}, new Date(2017, 10, 1))
 ```
 
 # Reporting Bugs or Feature Requests
