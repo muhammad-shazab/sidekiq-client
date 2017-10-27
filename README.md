@@ -27,7 +27,7 @@ import SidekiqClient from '@alienfast/sidekiq-client'
 
 // provide your own promisified redis client, or use the helper
 const redisClient = SidekiqClient.redisCreateClient({ url: 'redis://foo:6379' })
-const sidekiq = new SidekiqClient(redisClient);
+const sidekiq = new SidekiqClient(redisClient)
 
 // Enqueue a job to the 'default' queue with retry
 sidekiq.enqueue({ 
