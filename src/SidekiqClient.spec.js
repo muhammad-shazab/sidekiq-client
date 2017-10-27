@@ -9,18 +9,22 @@ describe('SidekiqClient', () => {
   const redisClient = SidekiqClient.redisCreateClient({ url: 'redis://localhost:6379/5' })
   const sidekiq = new SidekiqClient(redisClient)
 
+  after(() => {
+    redisClient.quit()
+  })
+
   describe('enqueue', () => {
     it('simple job', () => {
       sidekiq.enqueue({
         class: 'MyJob',
-        args: ['foo']
+        args: [ 'foo' ]
       })
     })
 
     it('different queue', () => {
       sidekiq.enqueue({
         class: 'MyJob',
-        args: ['foo'],
+        args: [ 'foo' ],
         retry: false,
         queue: 'critical'
       })
@@ -29,7 +33,7 @@ describe('SidekiqClient', () => {
     it('scheduled job', () => {
       sidekiq.enqueue({
         class: 'MyJob',
-        args: ['foo']
+        args: [ 'foo' ]
       }, new Date(new Date().getTime() + 5 * 60000)) // 5 minutes from now
     })
   })
