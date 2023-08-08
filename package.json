@@ -39,7 +39,7 @@
   ],
   "dependencies": {
     "bluebird": "^3.5.1",
-    "redis": "^2.8.0"
+    "redis": "3.1.1"
   },
   "devDependencies": {
     "@alienfast/build": "^2.0.133",
